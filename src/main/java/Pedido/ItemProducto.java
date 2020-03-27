@@ -2,9 +2,9 @@ package Pedido;
 
 import Producto.Producto;
 
-public class ProductoDetalle {
+public class ItemProducto {
 
-    public ProductoDetalle(Producto producto, int cantidad, String observaciones){
+    public ItemProducto(Producto producto, int cantidad, String observaciones){
         this.producto = producto;
         this.cantidad = cantidad;
         this.observaciones = observaciones;
@@ -13,10 +13,13 @@ public class ProductoDetalle {
     private int cantidad;
     private String observaciones;
 
+    public void aumentarCantidad(int cantidad){
+        this.cantidad += cantidad;
+    }
+
     public Producto getProducto() {
         return producto;
     }
-
 
     public int getCantidad() {
         return cantidad;
