@@ -13,9 +13,22 @@ public class Producto {
     double precio;
     Laboratorio laboratorio;
     Condicion condicion;
+    int stock;
 
     public double calcularPrecio() {
         return precio * condicion.porcentajeDescuento();
+    }
+
+    public void aumentarStock(int cantidad){
+        this.stock += cantidad;
+    }
+
+    public void disminuirStock(int cantidad){
+        this.stock -= cantidad;
+    }
+
+    public int getStock() {
+        return stock;
     }
 
 }

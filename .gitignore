@@ -5,6 +5,9 @@
 .classpath
 .settings/
 
+# MAVEN
+target/
+
 # Compiled class file
 *.class
 
