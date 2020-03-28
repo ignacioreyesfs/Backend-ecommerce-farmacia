@@ -1,5 +1,5 @@
 package Producto;
 
-public enum Laboratorio {
+public enum Fabricante {
     BAGO, EUROLAB;
 }

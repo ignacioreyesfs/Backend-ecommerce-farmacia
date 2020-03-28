@@ -2,16 +2,16 @@ package Producto;
 
 public class Producto {
 
-    public Producto(String nombre, double precio, Laboratorio laboratorio, Condicion condicion) {
+    public Producto(String nombre, double precio, Fabricante fabricante, Condicion condicion) {
         this.nombre = nombre;
         this.precio = precio;
-        this.laboratorio = laboratorio;
+        this.fabricante = fabricante;
         this.condicion = condicion;
     }
 
     String nombre;
     double precio;
-    Laboratorio laboratorio;
+    Fabricante fabricante;
     Condicion condicion;
     int stock;
 
@@ -31,4 +31,7 @@ public class Producto {
         return stock;
     }
 
+    public void setCondicion(Condicion condicion) {
+        this.condicion = condicion;
+    }
 }
