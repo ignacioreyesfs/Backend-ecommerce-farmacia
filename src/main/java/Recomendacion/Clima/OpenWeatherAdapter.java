@@ -59,6 +59,7 @@ public class OpenWeatherAdapter implements ProveedorClima {
             e.printStackTrace();
         }
 
+        //Aca fijarse como viene el JSON, si es un array usar JSONArray
         temperaturaString = ((JSONObject)jsonObject.get("main")).get("temp").toString();
 
         return this.kelvinToCelsius(Double.parseDouble(temperaturaString));
