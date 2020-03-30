@@ -1,13 +1,14 @@
 package Pedido;
 
 import Producto.*;
+import Recomendacion.ClimaPredominante;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
 
 public class PedidoTest {
 
-    Producto ibuprofeno = new Producto("Ibuprofeno 400", 120, Fabricante.BAGO, Condicion.VEINTEPORCIENTO);
+    Producto ibuprofeno = new Producto("Ibuprofeno 400", 120, Fabricante.BAGO, Condicion.VEINTEPORCIENTO, ClimaPredominante.NORMAL);
     ItemProducto ibuprofenos3 = new ItemProducto(ibuprofeno, 3, "");
     ItemProducto ibuprofenos4 = new ItemProducto(ibuprofeno, 4, "");
     Pedido pedido = new Pedido("Ayacucho", 341, "Tocar timbre y esperar");
