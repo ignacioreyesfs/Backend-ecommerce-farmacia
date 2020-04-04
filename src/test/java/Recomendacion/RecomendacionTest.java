@@ -21,7 +21,7 @@ public class RecomendacionTest {
     @Test
     public void recomiendaProductosEnBaseATemperatura(){
         //en vez de hacer Mockito.mock podrias agregar la annotation @Mock e instanciarlo normal
-        //pero para hacer eso, la variable debe ser global
+        //pero para hacer eso, la variable debe ser de la clase
         OpenWeatherAdapter weatherMock = Mockito.mock(OpenWeatherAdapter.class);
         when(weatherMock.obtenerTemperaturaAhora()).thenReturn(15.0);
 
