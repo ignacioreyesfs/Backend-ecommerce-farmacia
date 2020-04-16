@@ -1,28 +1,28 @@
-package Recomendacion.Clima;
+package Recommendation.WeatherConnection;
 
 import APIUtility.APIUtility;
 
-import Recomendacion.Clima.Exceptions.ConnectionToWeatherException;
+import Recommendation.WeatherConnection.Exceptions.ConnectionToWeatherException;
 import okhttp3.Response;
 import org.json.simple.JSONObject;
 
 import java.io.IOException;
 
-public class OpenWeatherAdapter implements ProveedorClima {
+public class OpenWeatherAdapter implements WeatherProvider {
 
     //TODO: ocultar mi api key
     private static String API_KEY = "3d8400ed6a740b8d6684b988a5d0b4d9";
-    private String urlTemperaturaAhora = "http://api.openweathermap.org/data/2.5/weather?q=Buenos%20Aires,Argentina&appid=" + API_KEY;
+    private String urlTemperatureNow = "http://api.openweathermap.org/data/2.5/weather?q=Buenos%20Aires,Argentina&appid=" + API_KEY;
 
     //Usando HttpUrlConnection
     //Usar OkHttp Library (abajo), es mas simple. Dejo este como ejemplo de HttpUrlConnection
-    public double obtenerTemperaturaAhora(){
+    public double getTemperatureNow(){
         APIUtility apiu = new APIUtility();
         Response response;
         JSONObject jobjResponse = null;
         // TODO: try again instead of throwing an exception
         try {
-            response = apiu.sendGetRequest(urlTemperaturaAhora, null);
+            response = apiu.sendGetRequest(urlTemperatureNow, null);
             jobjResponse = apiu.getJsonObjectResponse(response.body().string());
         } catch (IOException e) {
             e.printStackTrace();
@@ -31,11 +31,11 @@ public class OpenWeatherAdapter implements ProveedorClima {
 
         String stringTemperature = ((JSONObject)jobjResponse.get("main")).get("temp").toString();
 
-        return this.kelvinACelsius(Double.parseDouble(stringTemperature));
+        return this.kelvinToCelsius(Double.parseDouble(stringTemperature));
     }
 
 
-    private double kelvinACelsius(double kelvin){
+    private double kelvinToCelsius(double kelvin){
         return kelvin - 273;
     }
 }

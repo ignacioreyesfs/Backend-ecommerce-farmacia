@@ -1,4 +1,4 @@
-package Recomendacion.Clima.Exceptions;
+package Recommendation.WeatherConnection.Exceptions;
 
 public class ConnectionToWeatherException extends RuntimeException{
     public ConnectionToWeatherException(){
