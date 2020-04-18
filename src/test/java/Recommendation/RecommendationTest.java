@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RunWith(MockitoJUnitRunner.class)
-public class RecomendacionTest {
+public class RecommendationTest {
 
     @Test
     public void recommendsProductBasedOnTemperature(){

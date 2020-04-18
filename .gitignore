@@ -5,6 +5,13 @@
 .classpath
 .settings/
 
+# GRADLE
+.gradle
+/build
+
+# gmail
+tokens/
+
 # MAVEN
 target/
 

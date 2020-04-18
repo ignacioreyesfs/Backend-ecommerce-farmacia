@@ -23,11 +23,11 @@ public class Order {
     public void addItemProduct(ItemProduct itemProduct){
         Optional<ItemProduct> optionalSearchedItem = searchProduct(itemProduct.getProduct());
 
-        optionalSearchedItem.ifPresentOrElse(
-                (itemReal) ->
-                    {itemReal.incrementUnits(itemProduct.getUnits());},
-                () ->
-                    {itemProducts.add(itemProduct);});
+        if(optionalSearchedItem.isPresent()){
+            optionalSearchedItem.get().incrementUnits(itemProduct.getUnits());
+        }else{
+            itemProducts.add(itemProduct);
+        }
     }
 
     private Optional<ItemProduct> searchProduct(Product product){
