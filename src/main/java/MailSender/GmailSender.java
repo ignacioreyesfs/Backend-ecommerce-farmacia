@@ -26,16 +26,16 @@ import java.util.Properties;
 public class GmailSender {
 
     // For maximum efficiency, applications should use a single globally-shared instance of the JSON factory.
-    private static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
-    private static final String TOKENS_DIRECTORY_PATH = "tokens";
+    private final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
+    private final String TOKENS_DIRECTORY_PATH = "tokens";
 
     /**
      * Global instance of the scopes required by this quickstart.
      * If modifying these scopes, delete your previously saved tokens/ folder.
      * SCOPES are defined to get the flow authorization for make them.
      */
-    private static final List<String> SCOPES = Collections.singletonList(GmailScopes.GMAIL_SEND);
-    private static final String CREDENTIALS_FILE_PATH = "/credentials.json";
+    private final List<String> SCOPES = Collections.singletonList(GmailScopes.GMAIL_SEND);
+    private final String CREDENTIALS_FILE_PATH = "/credentials.json";
 
     /**
      * Creates an authorized Credential object.
@@ -43,7 +43,7 @@ public class GmailSender {
      * @return An authorized Credential object.
      * @throws IOException If the credentials.json file cannot be found.
      */
-    public static Credential getCredentials(final NetHttpTransport HTTP_TRANSPORT) throws IOException {
+    public Credential getCredentials(final NetHttpTransport HTTP_TRANSPORT) throws IOException {
         // Load client secrets. The client secrets are like password etc contain in the credential
         InputStream in = GmailSender.class.getResourceAsStream(CREDENTIALS_FILE_PATH);
         if (in == null) {
@@ -73,12 +73,15 @@ public class GmailSender {
      * @return the MimeMessage to be used to send email
      * @throws MessagingException
      */
-    public static MimeMessage createEmail(String to,
+    public MimeMessage createEmail(String to,
                                           String from,
                                           String subject,
                                           String bodyText)
             throws MessagingException {
+        // Properties like mail.transport.protocol, mail.host, mail.user, etc can be added
         Properties props = new Properties();
+        // Note that if the Authenticator object used to create the session is null,
+        // anyone can get the default session by passing in null. (see session documentation)
         Session session = Session.getDefaultInstance(props, null);
 
         MimeMessage email = new MimeMessage(session);
@@ -99,7 +102,7 @@ public class GmailSender {
      * @throws IOException
      * @throws MessagingException
      */
-    private static Message createMessageWithEmail(MimeMessage emailContent)
+    public Message createMessageWithEmail(MimeMessage emailContent)
             throws MessagingException, IOException {
         ByteArrayOutputStream buffer = new ByteArrayOutputStream();
         emailContent.writeTo(buffer);
@@ -121,7 +124,7 @@ public class GmailSender {
      * @throws MessagingException
      * @throws IOException
      */
-    public static Message sendMessage(Gmail service,
+    public Message sendMessage(Gmail service,
                                       String userId,
                                       MimeMessage emailContent)
             throws MessagingException, IOException {

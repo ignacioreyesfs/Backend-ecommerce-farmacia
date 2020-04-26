@@ -11,6 +11,7 @@
 
 # gmail
 tokens/
+src/main/resources/credentials.json
 
 # MAVEN
 target/

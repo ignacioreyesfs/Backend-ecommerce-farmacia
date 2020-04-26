@@ -7,7 +7,6 @@ version = '1.0-SNAPSHOT'
 
 description = """"""
 
-mainClassName = 'GmailQuickstart'
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 version = '1.0'
