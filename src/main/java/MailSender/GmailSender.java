@@ -5,6 +5,7 @@ import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInsta
 import com.google.api.client.extensions.jetty.auth.oauth2.LocalServerReceiver;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
 import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets;
+import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
@@ -19,32 +20,22 @@ import javax.mail.Session;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.io.*;
+import java.security.GeneralSecurityException;
 import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
 
 public class GmailSender {
 
-    // For maximum efficiency, applications should use a single globally-shared instance of the JSON factory.
     private final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
     private final String TOKENS_DIRECTORY_PATH = "tokens";
-
-    /**
-     * Global instance of the scopes required by this quickstart.
-     * If modifying these scopes, delete your previously saved tokens/ folder.
-     * SCOPES are defined to get the flow authorization for make them.
-     */
     private final List<String> SCOPES = Collections.singletonList(GmailScopes.GMAIL_SEND);
     private final String CREDENTIALS_FILE_PATH = "/credentials.json";
+    private String from = "farmacialibertadtesting@gmail.com";
+    private String userId = "me";
 
-    /**
-     * Creates an authorized Credential object.
-     * @param HTTP_TRANSPORT The network HTTP Transport.
-     * @return An authorized Credential object.
-     * @throws IOException If the credentials.json file cannot be found.
-     */
-    public Credential getCredentials(final NetHttpTransport HTTP_TRANSPORT) throws IOException {
-        // Load client secrets. The client secrets are like password etc contain in the credential
+    protected Credential getCredentials(final NetHttpTransport HTTP_TRANSPORT) throws IOException {
+        // Load client secrets.
         InputStream in = GmailSender.class.getResourceAsStream(CREDENTIALS_FILE_PATH);
         if (in == null) {
             throw new FileNotFoundException("Resource not found: " + CREDENTIALS_FILE_PATH);
@@ -52,7 +43,7 @@ public class GmailSender {
         // load the clients secrets from the input reader on the GoogleClientSecrets using a JSON_FACTORY
         GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
 
-        // Build flow and trigger user authorization request. Makes the authorization flow needed for the request.
+        // Build flow and trigger user authorization request.
         GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
                 HTTP_TRANSPORT, JSON_FACTORY, clientSecrets, SCOPES)
                 .setDataStoreFactory(new FileDataStoreFactory(new java.io.File(TOKENS_DIRECTORY_PATH)))
@@ -63,25 +54,12 @@ public class GmailSender {
         return new AuthorizationCodeInstalledApp(flow, receiver).authorize("user");
     }
 
-    /**
-     * Create a MimeMessage using the parameters provided.
-     *
-     * @param to email address of the receiver
-     * @param from email address of the sender, the mailbox account
-     * @param subject subject of the email
-     * @param bodyText body text of the email
-     * @return the MimeMessage to be used to send email
-     * @throws MessagingException
-     */
-    public MimeMessage createEmail(String to,
+    protected MimeMessage createEmail(String to,
                                           String from,
                                           String subject,
                                           String bodyText)
             throws MessagingException {
-        // Properties like mail.transport.protocol, mail.host, mail.user, etc can be added
         Properties props = new Properties();
-        // Note that if the Authenticator object used to create the session is null,
-        // anyone can get the default session by passing in null. (see session documentation)
         Session session = Session.getDefaultInstance(props, null);
 
         MimeMessage email = new MimeMessage(session);
@@ -94,15 +72,7 @@ public class GmailSender {
         return email;
     }
 
-    /**
-     * Create a message from an email.
-     *
-     * @param emailContent Email to be set to raw of message
-     * @return a message containing a base64url encoded email
-     * @throws IOException
-     * @throws MessagingException
-     */
-    public Message createMessageWithEmail(MimeMessage emailContent)
+    protected Message createMessageWithEmail(MimeMessage emailContent)
             throws MessagingException, IOException {
         ByteArrayOutputStream buffer = new ByteArrayOutputStream();
         emailContent.writeTo(buffer);
@@ -113,26 +83,30 @@ public class GmailSender {
         return message;
     }
 
-    /**
-     * Send an email from the user's mailbox to its recipient.
-     *
-     * @param service Authorized Gmail API instance.
-     * @param userId User's email address. The special value "me"
-     * can be used to indicate the authenticated user.
-     * @param emailContent Email to be sent.
-     * @return The sent message
-     * @throws MessagingException
-     * @throws IOException
-     */
-    public Message sendMessage(Gmail service,
+    protected Message sendMessage(Gmail service,
                                       String userId,
                                       MimeMessage emailContent)
             throws MessagingException, IOException {
+
         Message message = createMessageWithEmail(emailContent);
         message = service.users().messages().send(userId, message).execute();
 
         return message;
     }
 
+    public Message sendNewStockEmail(String to, String product) throws GeneralSecurityException, IOException, MessagingException {
+        // Build a new authorized API client service.
+        JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
+        final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
+        Gmail service = new Gmail.Builder(HTTP_TRANSPORT, jsonFactory, this.getCredentials(HTTP_TRANSPORT))
+                .build();
+
+        // Create a message
+        MimeMessage mimeMessage = this.createEmail(to,
+                this.from, "New " + product + " stock arrived - Farmacia Libertad",
+                "New " + product + " stock is available, go check our store");
+
+        return this.sendMessage(service, this.userId, mimeMessage);
+    }
 
 }

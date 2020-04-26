@@ -24,11 +24,11 @@ public class MailSenderTest {
     @Test
     public void TestingSendingRandomEmail() throws MessagingException, IOException, GeneralSecurityException {
         // Build a new authorized API client service.
-        JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
+        JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
         final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
         // spy gmailSender
         GmailSender gmailSender = Mockito.spy(GmailSender.class);
-        Gmail service = new Gmail.Builder(HTTP_TRANSPORT, JSON_FACTORY, gmailSender.getCredentials(HTTP_TRANSPORT))
+        Gmail service = new Gmail.Builder(HTTP_TRANSPORT, jsonFactory, gmailSender.getCredentials(HTTP_TRANSPORT))
                 .setApplicationName(APPLICATION_NAME)
                 .build();
 
