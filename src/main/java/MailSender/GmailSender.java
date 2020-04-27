@@ -21,9 +21,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.io.*;
 import java.security.GeneralSecurityException;
-import java.util.Collections;
-import java.util.List;
-import java.util.Properties;
+import java.util.*;
 
 public class GmailSender {
 
@@ -33,6 +31,21 @@ public class GmailSender {
     private final String CREDENTIALS_FILE_PATH = "/credentials.json";
     private String from = "farmacialibertadtesting@gmail.com";
     private String userId = "me";
+
+    public Message newStockEmailNotification(Set<String> TOs, String product) throws GeneralSecurityException, IOException, MessagingException {
+        // Build a new authorized API client service.
+        JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
+        final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
+        Gmail service = new Gmail.Builder(HTTP_TRANSPORT, jsonFactory, this.getCredentials(HTTP_TRANSPORT))
+                .build();
+
+        // Create a message
+        MimeMessage mimeMessage = this.createEmail(TOs,
+                this.from, "New " + product + " stock arrived - Farmacia Libertad",
+                "New " + product + " stock is available, go check our store");
+
+        return this.sendMessage(service, this.userId, mimeMessage);
+    }
 
     protected Credential getCredentials(final NetHttpTransport HTTP_TRANSPORT) throws IOException {
         // Load client secrets.
@@ -54,22 +67,55 @@ public class GmailSender {
         return new AuthorizationCodeInstalledApp(flow, receiver).authorize("user");
     }
 
-    protected MimeMessage createEmail(String to,
+    protected MimeMessage createEmail(Set<String> TOs,
                                           String from,
                                           String subject,
                                           String bodyText)
             throws MessagingException {
+
+
+
         Properties props = new Properties();
         Session session = Session.getDefaultInstance(props, null);
 
         MimeMessage email = new MimeMessage(session);
-
         email.setFrom(new InternetAddress(from));
-        email.addRecipient(javax.mail.Message.RecipientType.TO,
-                new InternetAddress(to));
+
+        Iterator<String> toIterator = TOs.iterator();
+
+
+        email.addRecipients(javax.mail.Message.RecipientType.TO,
+                InternetAddress.parseHeader(this.setToString(TOs), false));
         email.setSubject(subject);
         email.setText(bodyText);
+
         return email;
+    }
+
+    private String setToString(Set<String> setStrings){
+        StringBuffer emails = new StringBuffer();
+
+        Iterator<String> toIterator = setStrings.iterator();
+        while(toIterator.hasNext()){
+            String to = toIterator.next();
+            if(toIterator.hasNext())
+                emails.append(to + ",");
+            else
+                emails.append(to);
+        }
+
+        return emails.toString();
+    }
+
+    protected Message sendMessage(Gmail service,
+                                  String userId,
+                                  MimeMessage emailContent)
+            throws MessagingException, IOException {
+
+        Message message = this.createMessageWithEmail(emailContent);
+        message = service.users().messages().send(userId, message).execute();
+
+        return message;
     }
 
     protected Message createMessageWithEmail(MimeMessage emailContent)
@@ -81,32 +127,6 @@ public class GmailSender {
         Message message = new Message();
         message.setRaw(encodedEmail);
         return message;
-    }
-
-    protected Message sendMessage(Gmail service,
-                                      String userId,
-                                      MimeMessage emailContent)
-            throws MessagingException, IOException {
-
-        Message message = createMessageWithEmail(emailContent);
-        message = service.users().messages().send(userId, message).execute();
-
-        return message;
-    }
-
-    public Message sendNewStockEmail(String to, String product) throws GeneralSecurityException, IOException, MessagingException {
-        // Build a new authorized API client service.
-        JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
-        final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
-        Gmail service = new Gmail.Builder(HTTP_TRANSPORT, jsonFactory, this.getCredentials(HTTP_TRANSPORT))
-                .build();
-
-        // Create a message
-        MimeMessage mimeMessage = this.createEmail(to,
-                this.from, "New " + product + " stock arrived - Farmacia Libertad",
-                "New " + product + " stock is available, go check our store");
-
-        return this.sendMessage(service, this.userId, mimeMessage);
     }
 
 }

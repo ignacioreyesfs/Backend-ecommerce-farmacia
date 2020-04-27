@@ -1,6 +1,11 @@
 package Product;
 
+import MailSender.GmailSender;
+import Product.Exceptions.CannotNotifyStock;
 import Recommendation.Weather;
+
+import java.util.HashSet;
+import java.util.Set;
 
 public class Product {
 
@@ -12,23 +17,40 @@ public class Product {
         this.weather = weather;
     }
 
-    String name;
-    double price;
-    Manufacturer manufacturer;
-    Condition condition;
-    Weather weather;
-    int stock;
+    private String name;
+    private double price;
+    private Manufacturer manufacturer;
+    private Condition condition;
+    private Weather weather;
+    private int stock;
+    private Set<String> stockSubscribers = new HashSet<>();
 
     public double calculatePrice() {
         return price * condition.discountRate();
     }
 
-    public void increaseStock(int cantidad){
-        this.stock += cantidad;
+    public void increaseStock(int amount){
+        this.stock += amount;
+        if(!stockSubscribers.isEmpty()){
+            try {
+                new GmailSender().newStockEmailNotification(this.stockSubscribers, this.name);
+            } catch (Exception e) {
+                e.printStackTrace();
+                throw new CannotNotifyStock();
+            }
+        }
     }
 
-    public void decreaseStock(int cantidad){
-        this.stock -= cantidad;
+    public void decreaseStock(int amount){
+        this.stock -= amount;
+    }
+
+    public void addStockSubscriber(String email){
+        this.stockSubscribers.add(email);
+    }
+
+    public void deleteSubscribers(){
+        this.stockSubscribers.clear();
     }
 
     public int getStock() {

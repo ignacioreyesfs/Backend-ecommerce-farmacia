@@ -13,6 +13,8 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+import java.util.HashSet;
+import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
@@ -33,7 +35,9 @@ public class MailSenderTest {
                 .build();
 
         // Create a message
-        MimeMessage mimeMessage = gmailSender.createEmail("farmacialibertadreceiver@gmail.com",
+        Set<String> emails = new HashSet<>();
+        emails.add("farmacialibertadreceiver@gmail.com");
+        MimeMessage mimeMessage = gmailSender.createEmail(emails,
                 "farmacialibertadtesting@gmail.com", "Testing", "This is a testing email, thanks google for the account");
 
         // Send the email
