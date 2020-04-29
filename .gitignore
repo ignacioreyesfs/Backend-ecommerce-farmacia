@@ -5,6 +5,14 @@
 .classpath
 .settings/
 
+# GRADLE
+.gradle
+/build
+
+# gmail
+tokens/
+src/main/resources/credentials.json
+
 # MAVEN
 target/
 
