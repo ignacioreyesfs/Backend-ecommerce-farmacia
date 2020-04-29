@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.function.Function;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
@@ -45,6 +46,8 @@ public class MailSenderTest {
 
         // set the spy return
         doReturn(message).when(gmailSender).sendMessage(any(), any(), any());
+
+        new GmailSender().newStockEmailNotification(emails, "Coca cola 600ml");
 
         assertEquals(message, gmailSender.sendMessage(service, "me", mimeMessage));
     }

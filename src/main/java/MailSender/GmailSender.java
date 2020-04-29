@@ -29,6 +29,7 @@ public class GmailSender {
     private final String TOKENS_DIRECTORY_PATH = "tokens";
     private final List<String> SCOPES = Collections.singletonList(GmailScopes.GMAIL_SEND);
     private final String CREDENTIALS_FILE_PATH = "/credentials.json";
+    private final String APPLICATION_NAME = "Stock Notificator";
     private String from = "farmacialibertadtesting@gmail.com";
     private String userId = "me";
 
@@ -37,6 +38,7 @@ public class GmailSender {
         JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
         final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
         Gmail service = new Gmail.Builder(HTTP_TRANSPORT, jsonFactory, this.getCredentials(HTTP_TRANSPORT))
+                .setApplicationName(APPLICATION_NAME)
                 .build();
 
         // Create a message

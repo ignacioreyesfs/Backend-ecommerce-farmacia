@@ -10,7 +10,7 @@ import java.io.IOException;
 
 public class OpenWeatherAdapter implements WeatherProvider {
 
-    //TODO: ocultar mi api key
+    //TODO: hide api key
     private static String API_KEY = "3d8400ed6a740b8d6684b988a5d0b4d9";
     private String urlTemperatureNow = "http://api.openweathermap.org/data/2.5/weather?q=Buenos%20Aires,Argentina&appid=" + API_KEY;
 

@@ -31,10 +31,15 @@ public class Product {
 
     public void increaseStock(int amount){
         this.stock += amount;
+        this.notifyCustomers();
+    }
+
+    private void notifyCustomers(){
         if(!stockSubscribers.isEmpty()){
             try {
                 new GmailSender().newStockEmailNotification(this.stockSubscribers, this.name);
             } catch (Exception e) {
+                // TODO: retry
                 e.printStackTrace();
                 throw new CannotNotifyStock();
             }
