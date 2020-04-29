@@ -33,7 +33,7 @@ public class GmailSender {
     private String from = "farmacialibertadtesting@gmail.com";
     private String userId = "me";
 
-    public Message newStockEmailNotification(Set<String> TOs, String product) throws GeneralSecurityException, IOException, MessagingException {
+    public Message newStockEmailNotification(Set<String> tos, String product) throws GeneralSecurityException, IOException, MessagingException {
         // Build a new authorized API client service.
         JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
         final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
@@ -42,7 +42,7 @@ public class GmailSender {
                 .build();
 
         // Create a message
-        MimeMessage mimeMessage = this.createEmail(TOs,
+        MimeMessage mimeMessage = this.createEmail(tos,
                 this.from, "New " + product + " stock arrived - Farmacia Libertad",
                 "New " + product + " stock is available, go check our store");
 
@@ -69,7 +69,7 @@ public class GmailSender {
         return new AuthorizationCodeInstalledApp(flow, receiver).authorize("user");
     }
 
-    protected MimeMessage createEmail(Set<String> TOs,
+    protected MimeMessage createEmail(Set<String> tos,
                                           String from,
                                           String subject,
                                           String bodyText)
@@ -83,11 +83,11 @@ public class GmailSender {
         MimeMessage email = new MimeMessage(session);
         email.setFrom(new InternetAddress(from));
 
-        Iterator<String> toIterator = TOs.iterator();
+        Iterator<String> toIterator = tos.iterator();
 
 
         email.addRecipients(javax.mail.Message.RecipientType.TO,
-                InternetAddress.parseHeader(this.setToString(TOs), false));
+                InternetAddress.parseHeader(this.setToString(tos), false));
         email.setSubject(subject);
         email.setText(bodyText);
 
