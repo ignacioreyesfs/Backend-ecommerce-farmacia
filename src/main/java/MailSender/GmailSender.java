@@ -75,8 +75,6 @@ public class GmailSender {
                                           String bodyText)
             throws MessagingException {
 
-
-
         Properties props = new Properties();
         Session session = Session.getDefaultInstance(props, null);
 
