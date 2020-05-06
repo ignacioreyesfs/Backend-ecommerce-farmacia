@@ -34,6 +34,7 @@ public class Product {
         this.notifyCustomers();
     }
 
+    // TODO: extract this method to a class which use an hashmap for products and emails.
     private void notifyCustomers(){
         if(!stockSubscribers.isEmpty()){
             try {
