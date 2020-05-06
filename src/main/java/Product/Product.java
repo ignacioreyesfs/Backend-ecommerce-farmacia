@@ -1,6 +1,6 @@
 package Product;
 
-import MailSender.GmailSender;
+import Utilities.MailSender.GmailSender;
 import Product.Exceptions.CannotNotifyStock;
 import Recommendation.Weather;
 

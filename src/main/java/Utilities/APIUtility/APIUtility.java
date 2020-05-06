@@ -1,6 +1,6 @@
-package APIUtility;
+package Utilities.APIUtility;
 
-import APIUtility.Exceptions.*;
+import Utilities.APIUtility.Exceptions.*;
 import okhttp3.*;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;

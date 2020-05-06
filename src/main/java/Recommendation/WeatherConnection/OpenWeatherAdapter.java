@@ -1,6 +1,6 @@
 package Recommendation.WeatherConnection;
 
-import APIUtility.APIUtility;
+import Utilities.APIUtility.APIUtility;
 
 import Recommendation.WeatherConnection.Exceptions.ConnectionToWeatherException;
 import okhttp3.Response;
