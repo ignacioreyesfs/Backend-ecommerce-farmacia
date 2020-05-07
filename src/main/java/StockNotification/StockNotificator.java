@@ -9,11 +9,14 @@ import java.util.*;
 // called when product.increaseStock() is used
 public class StockNotificator {
 
-    private StockNotificator instance;
-    private HashMap<Product, Set<String>> productClients = new HashMap<Product, Set<String>>();
+    private static StockNotificator instance;
+    private Map<Product, Set<String>> productClients = new HashMap<Product, Set<String>>();
 
-    public StockNotificator getInstance(){
+    private StockNotificator(){}
+
+    public static StockNotificator getInstance(){
         if(instance == null){
+            // TODO: when implement the persistence, it must return the one persisted
             instance = new StockNotificator();
         }
         return instance;
