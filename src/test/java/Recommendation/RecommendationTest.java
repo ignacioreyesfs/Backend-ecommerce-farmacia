@@ -3,6 +3,7 @@ package Recommendation;
 import Product.*;
 import Recommendation.WeatherConnection.OpenWeatherAdapter;
 
+import Utilities.CronExpression.CronExpression;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
@@ -11,6 +12,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.when;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
