@@ -7,12 +7,13 @@ import org.quartz.JobExecutionContext;
 import Product.Condition;
 
 public class OfferStartJob implements Job {
+
     public void execute(JobExecutionContext context){
         JobDataMap dataMap = context.getJobDetail().getJobDataMap();
-        Condition discount = (Condition)dataMap.get("discount");
+        Condition condition = (Condition)dataMap.get("condition");
         // TODO: when persistence is implemented, change it to product id
         Product product = (Product)dataMap.get("product");
 
-        product.setCondition(discount);
+        product.setCondition(condition);
     }
 }

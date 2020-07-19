@@ -5,23 +5,26 @@ import Recommendation.Weather;
 
 public class Product {
 
-    public Product(String name, double price, Manufacturer manufacturer, Condition condition, Weather weather) {
-        this.name = name;
-        this.price = price;
-        this.manufacturer = manufacturer;
-        this.condition = condition;
-        this.weather = weather;
-    }
-
     private String name;
     private double price;
     private Manufacturer manufacturer;
-    private Condition condition;
+    private Condition condition = Condition.NORMAL;
     private Weather weather;
     private int stock;
 
+    public Product(String name, double price, Manufacturer manufacturer, Weather weather) {
+        this.name = name;
+        this.price = price;
+        this.manufacturer = manufacturer;
+        this.weather = weather;
+    }
+
     public double calculatePrice() {
         return price * condition.discountRate();
+    }
+
+    public double priceWithoutDiscount(){
+        return price;
     }
 
     public void increaseStock(int amount){
@@ -46,5 +49,9 @@ public class Product {
 
     public Weather getWeather() {
         return this.weather;
+    }
+
+    public Condition getCondition(){
+        return this.condition;
     }
 }

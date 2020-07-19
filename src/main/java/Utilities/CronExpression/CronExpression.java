@@ -1,9 +1,11 @@
 package Utilities.CronExpression;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
-public class CronExpression {
-    public String getCronExpression(LocalDate date){
-        return "00 00 00 " + date.getDayOfMonth() + " " + date.getMonth().getValue() + " ? " + date.getYear();
+public final class CronExpression {
+    public static String getCronExpressionLocalDateTime(LocalDateTime dateTime){
+        return dateTime.getSecond() + " " + dateTime.getMinute() + " " + dateTime.getHour() + " "
+            + dateTime.getDayOfMonth() + " " + dateTime.getMonth().getValue() + " ? " + dateTime.getYear();
     }
 }
