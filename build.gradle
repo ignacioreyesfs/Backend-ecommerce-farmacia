@@ -25,4 +25,14 @@ dependencies {
     compile 'com.google.apis:google-api-services-gmail:v1-rev83-1.23.0'
     compile group: 'javax.mail', name: 'javax.mail-api', version: '1.6.2'
     compile group: 'com.sun.mail', name: 'javax.mail', version: '1.6.2'
+
+    // https://mvnrepository.com/artifact/org.quartz-scheduler/quartz
+    compile group: 'org.quartz-scheduler', name: 'quartz', version: '2.3.2'
+
+
+    // added to avoid a quartz warning
+    // https://mvnrepository.com/artifact/org.slf4j/slf4j-nop
+    testCompile group: 'org.slf4j', name: 'slf4j-nop', version: '1.7.30'
+
+
 }
