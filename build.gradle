@@ -34,5 +34,10 @@ dependencies {
     // https://mvnrepository.com/artifact/org.slf4j/slf4j-nop
     testCompile group: 'org.slf4j', name: 'slf4j-nop', version: '1.7.30'
 
+    // Persistence
+    // https://mvnrepository.com/artifact/org.hibernate/hibernate-core
+    compile group: 'org.hibernate', name: 'hibernate-core', version: '5.4.18.Final'
+    // https://mvnrepository.com/artifact/mysql/mysql-connector-java
+    compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.21'
 
 }

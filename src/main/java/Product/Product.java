@@ -1,6 +1,5 @@
 package Product;
 
-import StockNotification.StockNotificator;
 import Recommendation.Weather;
 
 public class Product {
