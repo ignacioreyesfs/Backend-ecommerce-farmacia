@@ -1,13 +1,22 @@
 package Product;
 
 import Recommendation.Weather;
+import StockNotification.StockNotificator;
 
+import javax.persistence.*;
+
+@Entity
 public class Product {
-
+    @Id
+    @GeneratedValue
+    private int id;
     private String name;
     private double price;
+    @Enumerated(EnumType.STRING)
     private Manufacturer manufacturer;
+    @Enumerated(EnumType.STRING)
     private Condition condition = Condition.NORMAL;
+    @Enumerated(EnumType.STRING)
     private Weather weather;
     private int stock;
 
@@ -28,6 +37,7 @@ public class Product {
 
     public void increaseStock(int amount){
         stock += amount;
+        new StockNotificator().notifyCustomers(this);
     }
 
     public void decreaseStock(int amount){
@@ -52,5 +62,9 @@ public class Product {
 
     public Condition getCondition(){
         return this.condition;
+    }
+
+    public int getId(){
+        return this.id;
     }
 }

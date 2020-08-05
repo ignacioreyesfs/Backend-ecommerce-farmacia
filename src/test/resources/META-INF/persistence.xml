@@ -7,7 +7,10 @@
 
     <persistence-unit name="h2" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.ejb.HibernatePersistence</provider>
-        <!-- <class>Product.Product</class> -->
+
+        <class>Product.Product</class>
+        <class>StockNotification.StockNotificator</class>
+        <class>StockNotification.AwaitedProduct</class>
 
         <properties>
 
