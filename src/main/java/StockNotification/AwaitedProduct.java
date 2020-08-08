@@ -9,15 +9,17 @@ import java.util.Set;
 public class AwaitedProduct {
     @Id
     @GeneratedValue
-    private int id;
+    private Integer id;
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @Column(name="product_id")
+    @JoinColumn(name="product_id")
     private Product product;
     @ElementCollection
     @CollectionTable(name="awaitedProduct_emails",
             joinColumns = {@JoinColumn(name="awaitedProduct_id", referencedColumnName = "id")})
     @Column(name="email")
     private Set<String> clientsEmails = new HashSet<>();
+
+    public AwaitedProduct(){}
 
     public AwaitedProduct(Product product){
         this.product = product;
@@ -43,7 +45,7 @@ public class AwaitedProduct {
         this.product = product;
     }
 
-    public int getId(){
+    public Integer getId(){
         return id;
     }
 }

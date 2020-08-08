@@ -21,7 +21,6 @@ public final class RepoAwaitedProduct {
         String queryString = "SELECT * FROM AwaitedProduct WHERE product_id = :productID";
         Query query = em.createQuery(queryString);
         query.setParameter("productID", product.getId());
-
         return query.getResultList().stream().findFirst();
     }
 

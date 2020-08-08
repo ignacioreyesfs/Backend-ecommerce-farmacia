@@ -9,7 +9,7 @@ import javax.persistence.*;
 public class Product {
     @Id
     @GeneratedValue
-    private int id;
+    private Integer id;
     private String name;
     private double price;
     @Enumerated(EnumType.STRING)
@@ -19,6 +19,8 @@ public class Product {
     @Enumerated(EnumType.STRING)
     private Weather weather;
     private int stock;
+
+    public Product(){}
 
     public Product(String name, double price, Manufacturer manufacturer, Weather weather) {
         this.name = name;
@@ -64,7 +66,7 @@ public class Product {
         return this.condition;
     }
 
-    public int getId(){
+    public Integer getId(){
         return this.id;
     }
 }
