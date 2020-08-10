@@ -1,17 +1,12 @@
 package Product;
 
 import javax.persistence.EntityManager;
-import Utilities.Persistence.GlobalEntityManager;
 
 public class RepoProduct {
-    private static RepoProduct instance;
-    private EntityManager em = GlobalEntityManager.getInstance().getEntityManager();
+    private EntityManager em;
 
-    public static RepoProduct getInstance(){
-        if(instance == null)
-            instance = new RepoProduct();
-
-        return instance;
+    public RepoProduct(EntityManager em){
+        this.em = em;
     }
 
     public Product findProductById(int id){

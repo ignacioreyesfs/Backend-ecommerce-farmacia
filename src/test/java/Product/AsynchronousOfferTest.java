@@ -12,20 +12,27 @@ import org.quartz.*;
 import org.quartz.impl.StdSchedulerFactory;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import java.time.LocalDateTime;
 import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.assertEquals;
 
 public class AsynchronousOfferTest {
+    private EntityManagerFactory emf;
     private EntityManager em;
+    private RepoProduct repoProduct;
     private Product ibuprofeno;
 
     private Scheduler scheduler;
     @Before
     public void initialize() throws SchedulerException {
         // added cause Jobs works with product id
-        em = GlobalEntityManager.getInstance().getEntityManager();
+        emf =  Persistence.createEntityManagerFactory("pharmacy");
+        em = emf.createEntityManager();
+        repoProduct = new RepoProduct(em);
+
         em.getTransaction().begin();
 
         ibuprofeno = new Product("Ibuprofeno 400mg", 145, Manufacturer.BAGO, Weather.NORMAL);
@@ -33,7 +40,7 @@ public class AsynchronousOfferTest {
         SchedulerFactory schedulerFactory = new StdSchedulerFactory();
         scheduler = schedulerFactory.getScheduler();
         scheduler.start();
-        ibuprofeno = RepoProduct.getInstance().saveProduct(ibuprofeno);
+        ibuprofeno = repoProduct.saveProduct(ibuprofeno);
     }
 
     @After
@@ -58,8 +65,8 @@ public class AsynchronousOfferTest {
                 .build();
 
         scheduler.scheduleJob(job, trigger);
-
         TimeUnit.SECONDS.sleep(1);
+        repoProduct.findProductById(ibuprofeno.getId());
 
         assertEquals(Condition.TWENTYPERCENT, ibuprofeno.getCondition());
     }

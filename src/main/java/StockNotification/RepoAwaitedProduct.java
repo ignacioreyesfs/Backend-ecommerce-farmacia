@@ -6,15 +6,10 @@ import javax.persistence.*;
 import java.util.Optional;
 
 public final class RepoAwaitedProduct {
-    private EntityManagerFactory emf = Persistence.createEntityManagerFactory("pharmacy");
-    private EntityManager em = emf.createEntityManager();
-    private static RepoAwaitedProduct instance;
+    private EntityManager em;
 
-    public static RepoAwaitedProduct getInstance(){
-        if(instance == null)
-            instance = new RepoAwaitedProduct();
-
-        return instance;
+    public RepoAwaitedProduct(EntityManager em){
+        this.em = em;
     }
 
     public Optional<AwaitedProduct> findAwaitedByProduct(Product product){

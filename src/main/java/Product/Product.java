@@ -10,11 +10,13 @@ public class Product {
     @Id
     @GeneratedValue
     private Integer id;
+    @Column(name="product_name")
     private String name;
     private double price;
     @Enumerated(EnumType.STRING)
     private Manufacturer manufacturer;
     @Enumerated(EnumType.STRING)
+    @Column(name="product_condition")
     private Condition condition = Condition.NORMAL;
     @Enumerated(EnumType.STRING)
     private Weather weather;
