@@ -1,6 +1,7 @@
 package Product.Offer;
 
 import Product.Product;
+import Utilities.Persistence.GlobalEntityManagerFactory;
 import org.quartz.Job;
 import org.quartz.JobDataMap;
 import org.quartz.JobExecutionContext;
@@ -9,11 +10,10 @@ import Product.RepoProduct;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 
 public class OfferStartJob implements Job {
 
-    EntityManagerFactory emf = Persistence.createEntityManagerFactory("pharmacy");
+    EntityManagerFactory emf = GlobalEntityManagerFactory.getInstance().getEntityManagerFactory();
     EntityManager em = emf.createEntityManager();
     RepoProduct repoProduct = new RepoProduct(em);
 
@@ -27,12 +27,11 @@ public class OfferStartJob implements Job {
         Product product = repoProduct.findProductById(productId);
         if(product == null){
             em.getTransaction().rollback();
-            em.close();
             throw new NotInDatabaseException();
         }
         product.setCondition(condition);
+        repoProduct.saveProduct(product);
 
         em.getTransaction().commit();
-        em.close();
     }
 }
