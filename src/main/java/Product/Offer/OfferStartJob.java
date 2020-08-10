@@ -9,12 +9,10 @@ import Product.Condition;
 import Product.RepoProduct;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 
 public class OfferStartJob implements Job {
 
-    EntityManagerFactory emf = GlobalEntityManagerFactory.getInstance().getEntityManagerFactory();
-    EntityManager em = emf.createEntityManager();
+    EntityManager em = GlobalEntityManagerFactory.getInstance().getEntityManagerFactory().createEntityManager();
     RepoProduct repoProduct = new RepoProduct(em);
 
     public void execute(JobExecutionContext context){

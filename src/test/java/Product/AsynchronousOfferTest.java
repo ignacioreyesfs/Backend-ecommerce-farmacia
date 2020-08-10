@@ -19,7 +19,6 @@ import java.util.concurrent.TimeUnit;
 import static org.junit.Assert.assertEquals;
 
 public class AsynchronousOfferTest {
-    private EntityManagerFactory emf;
     private EntityManager em;
     private RepoProduct repoProduct;
     private Product ibuprofen;
@@ -28,8 +27,7 @@ public class AsynchronousOfferTest {
     @Before
     public void initialize() throws SchedulerException {
         // added cause Jobs works with product id
-        emf = GlobalEntityManagerFactory.getInstance().getEntityManagerFactory();
-        em = emf.createEntityManager();
+        em = GlobalEntityManagerFactory.getInstance().getEntityManagerFactory().createEntityManager();
         repoProduct = new RepoProduct(em);
         SchedulerFactory schedulerFactory = new StdSchedulerFactory();
         scheduler = schedulerFactory.getScheduler();

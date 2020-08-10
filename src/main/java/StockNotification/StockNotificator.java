@@ -3,17 +3,15 @@ package StockNotification;
 import Product.Exceptions.CannotNotifyStock;
 import Product.Product;
 import Utilities.MailSender.GmailSender;
+import Utilities.Persistence.GlobalEntityManagerFactory;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import java.util.*;
 
 // called when product.increaseStock() is used
 public class StockNotificator {
 
-    EntityManagerFactory emf = Persistence.createEntityManagerFactory("pharmacy");
-    EntityManager em = emf.createEntityManager();
+    EntityManager em = GlobalEntityManagerFactory.getInstance().getEntityManagerFactory().createEntityManager();
     RepoAwaitedProduct repoAwaitedProduct = new RepoAwaitedProduct(em);
 
     public void notifyCustomers(Product product){
