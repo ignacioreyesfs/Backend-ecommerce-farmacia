@@ -27,9 +27,9 @@ public class RecommendationTest {
         OpenWeatherAdapter weatherMock = Mockito.mock(OpenWeatherAdapter.class);
         when(weatherMock.getTemperatureNow()).thenReturn(15.0);
 
-        Product ibuprofeno = new Product("Ibuprofeno 400", 120, Manufacturer.BAGO, Weather.NORMAL);
-        Product panuelito = new Product("Pañuelitos x20", 15, Manufacturer.TISSUE, Weather.COLD);
-        Product off = new Product("Off 200ml", 150, Manufacturer.OFF, Weather.HOT);
+        Product ibuprofeno = new Product("Ibuprofeno", Unit.MG, 400, 120, Manufacturer.BAGO, Weather.NORMAL);
+        Product panuelito = new Product("Pañuelitos", Unit.UNITS, 20, 15, Manufacturer.TISSUE, Weather.COLD);
+        Product off = new Product("Off", Unit.ML, 200, 150, Manufacturer.OFF, Weather.HOT);
 
         List<Product> products = new ArrayList<Product>();
         products.add(ibuprofeno);

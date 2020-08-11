@@ -8,7 +8,7 @@ import static org.junit.Assert.*;
 
 public class OrderTest {
 
-    Product ibuprofeno = new Product("Ibuprofeno 400", 120, Manufacturer.BAGO, Weather.NORMAL);
+    Product ibuprofeno = new Product("Ibuprofeno", Unit.MG, 400, 120, Manufacturer.BAGO, Weather.NORMAL);
     ItemProduct ibuprofenos3 = new ItemProduct(ibuprofeno, 3, "");
     ItemProduct ibuprofenos4 = new ItemProduct(ibuprofeno, 4, "");
     Order order = new Order("Ayacucho", 341, "Ring the bell and wait");
