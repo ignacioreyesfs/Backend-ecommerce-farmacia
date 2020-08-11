@@ -14,7 +14,7 @@ public class AwaitedProduct {
     @JoinColumn(name="product_id")
     private Product product;
     @ElementCollection
-    @CollectionTable(name="awaitedProduct_emails",
+    @CollectionTable(name="AwaitedProduct_Emails",
             joinColumns = {@JoinColumn(name="awaitedProduct_id", referencedColumnName = "id")})
     @Column(name="email")
     private Set<String> clientsEmails = new HashSet<>();

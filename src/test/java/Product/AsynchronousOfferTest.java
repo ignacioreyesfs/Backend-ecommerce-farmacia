@@ -12,7 +12,6 @@ import org.quartz.*;
 import org.quartz.impl.StdSchedulerFactory;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import java.time.LocalDateTime;
 import java.util.concurrent.TimeUnit;
 

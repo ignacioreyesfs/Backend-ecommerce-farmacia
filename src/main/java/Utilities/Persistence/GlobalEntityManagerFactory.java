@@ -6,13 +6,13 @@ import javax.persistence.Persistence;
 public final class GlobalEntityManagerFactory {
 
     private EntityManagerFactory emf;
-    private static GlobalEntityManagerFactory gem;
+    private static GlobalEntityManagerFactory gemf;
 
     public static GlobalEntityManagerFactory getInstance(){
-        if(gem == null){
-            gem = new GlobalEntityManagerFactory();
+        if(gemf == null){
+            gemf = new GlobalEntityManagerFactory();
         }
-        return gem;
+        return gemf;
     }
 
     public EntityManagerFactory getEntityManagerFactory(){
