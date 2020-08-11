@@ -30,7 +30,7 @@ public class AsynchronousOfferTest {
         repoProduct = new RepoProduct(em);
         SchedulerFactory schedulerFactory = new StdSchedulerFactory();
         scheduler = schedulerFactory.getScheduler();
-        ibuprofen = new Product("Ibuprofen 400mg", 145, Manufacturer.BAGO, Weather.NORMAL);
+        ibuprofen = new Product("Ibuprofen", Unit.MG, 400, 145, Manufacturer.BAGO, Weather.NORMAL);
 
         em.getTransaction().begin();
         ibuprofen = repoProduct.saveProduct(ibuprofen);

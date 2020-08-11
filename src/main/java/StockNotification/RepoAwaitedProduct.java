@@ -12,6 +12,15 @@ public final class RepoAwaitedProduct {
         this.em = em;
     }
 
+    public AwaitedProduct saveAwaitedProduct(AwaitedProduct awp){
+        if(awp.getId() == null){
+            em.persist(awp);
+        }else{
+            awp = em.merge(awp);
+        }
+        return awp;
+    }
+
     public Optional<AwaitedProduct> findAwaitedByProduct(Product product){
         String queryString = "SELECT * FROM AwaitedProduct WHERE product_id = :productID";
         Query query = em.createQuery(queryString);

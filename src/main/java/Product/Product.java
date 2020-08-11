@@ -21,11 +21,16 @@ public class Product {
     @Enumerated(EnumType.STRING)
     private Weather weather;
     private int stock;
+    private double dose;
+    @Enumerated(EnumType.STRING)
+    private Unit unit;
 
     public Product(){}
 
-    public Product(String name, double price, Manufacturer manufacturer, Weather weather) {
+    public Product(String name, Unit unit, double dose, double price, Manufacturer manufacturer, Weather weather) {
         this.name = name;
+        this.unit = unit;
+        this.dose = dose;
         this.price = price;
         this.manufacturer = manufacturer;
         this.weather = weather;
@@ -41,7 +46,6 @@ public class Product {
 
     public void increaseStock(int amount){
         stock += amount;
-        new StockNotificator().notifyCustomers(this);
     }
 
     public void decreaseStock(int amount){

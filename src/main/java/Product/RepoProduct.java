@@ -14,7 +14,12 @@ public class RepoProduct {
     }
 
     public Product saveProduct(Product product){
-        return em.merge(product);
+        if(product.getId() == null){
+            em.persist(product);
+        }else{
+            product = em.merge(product);
+        }
+        return product;
     }
 
 }

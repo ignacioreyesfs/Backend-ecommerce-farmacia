@@ -8,7 +8,7 @@ import Utilities.Persistence.GlobalEntityManagerFactory;
 import javax.persistence.EntityManager;
 import java.util.*;
 
-// called when product.increaseStock() is used
+// call after product.increaseStock() is called
 public class StockNotificator {
 
     EntityManager em = GlobalEntityManagerFactory.getInstance().getEntityManagerFactory().createEntityManager();
@@ -19,7 +19,9 @@ public class StockNotificator {
         if(awaitedProduct.isPresent()){
             try {
                 new GmailSender().newStockEmailNotification(awaitedProduct.get().getClientsEmails(), product.getName());
+                em.getTransaction().begin();
                 repoAwaitedProduct.removeAwaited(awaitedProduct.get());
+                em.getTransaction().commit();
             } catch (Exception e) {
                 // TODO: retry
                 e.printStackTrace();
