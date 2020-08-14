@@ -1,7 +1,6 @@
 package Product;
 
-import Recommendation.Weather;
-import StockNotification.StockNotificator;
+import Recommendation.RecommendedWeather;
 
 import javax.persistence.*;
 
@@ -19,7 +18,7 @@ public class Product {
     @Column(name="product_condition")
     private Condition condition = Condition.NORMAL;
     @Enumerated(EnumType.STRING)
-    private Weather weather;
+    private RecommendedWeather recommendedWeather;
     private int stock;
     private double dose;
     @Enumerated(EnumType.STRING)
@@ -27,13 +26,13 @@ public class Product {
 
     public Product(){}
 
-    public Product(String name, Unit unit, double dose, double price, Manufacturer manufacturer, Weather weather) {
+    public Product(String name, Unit unit, double dose, double price, Manufacturer manufacturer, RecommendedWeather recommendedWeather) {
         this.name = name;
         this.unit = unit;
         this.dose = dose;
         this.price = price;
         this.manufacturer = manufacturer;
-        this.weather = weather;
+        this.recommendedWeather = recommendedWeather;
     }
 
     public double calculatePrice() {
@@ -64,8 +63,8 @@ public class Product {
         this.condition = condition;
     }
 
-    public Weather getWeather() {
-        return this.weather;
+    public RecommendedWeather getWeather() {
+        return this.recommendedWeather;
     }
 
     public Condition getCondition(){

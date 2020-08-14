@@ -2,7 +2,7 @@ package Product;
 
 import Product.Offer.OfferEndJob;
 import Product.Offer.OfferStartJob;
-import Recommendation.Weather;
+import Recommendation.RecommendedWeather;
 import Utilities.CronExpression.CronExpression;
 import Utilities.Persistence.GlobalEntityManagerFactory;
 import org.junit.After;
@@ -30,7 +30,7 @@ public class AsynchronousOfferTest {
         repoProduct = new RepoProduct(em);
         SchedulerFactory schedulerFactory = new StdSchedulerFactory();
         scheduler = schedulerFactory.getScheduler();
-        ibuprofen = new Product("Ibuprofen", Unit.MG, 400, 145, Manufacturer.BAGO, Weather.NORMAL);
+        ibuprofen = new Product("Ibuprofen", Unit.MG, 400, 145, Manufacturer.BAGO, RecommendedWeather.NORMAL);
 
         em.getTransaction().begin();
         ibuprofen = repoProduct.saveProduct(ibuprofen);

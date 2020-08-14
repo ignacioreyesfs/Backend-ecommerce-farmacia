@@ -1,6 +1,6 @@
 package Recommendation;
 
-public enum Weather {
+public enum RecommendedWeather {
     COLD {
         @Override
         public boolean recommendedTemperature(double temperature){

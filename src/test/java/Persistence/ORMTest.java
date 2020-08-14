@@ -1,7 +1,7 @@
 package Persistence;
 
 import Product.*;
-import Recommendation.Weather;
+import Recommendation.RecommendedWeather;
 import StockNotification.AwaitedProduct;
 import StockNotification.RepoAwaitedProduct;
 import Utilities.Persistence.GlobalEntityManagerFactory;
@@ -34,7 +34,7 @@ public class ORMTest {
 
     @Test
     public void awaitedAndProductPersistTest(){
-        Product ibuprofen = new Product("Ibuprofen", Unit.MG, 600, 125, Manufacturer.BAGO, Weather.NORMAL);
+        Product ibuprofen = new Product("Ibuprofen", Unit.MG, 600, 125, Manufacturer.BAGO, RecommendedWeather.NORMAL);
         AwaitedProduct awaitedIbuprofen = new AwaitedProduct(ibuprofen);
 
         awaitedIbuprofen = repoAwaitedProduct.saveAwaitedProduct(awaitedIbuprofen);

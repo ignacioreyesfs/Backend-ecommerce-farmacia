@@ -1,4 +1,4 @@
-package Utilities.MailSender;
+package Utilities.Notification;
 
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
@@ -23,7 +23,7 @@ import java.io.*;
 import java.security.GeneralSecurityException;
 import java.util.*;
 
-public class GmailSender {
+public class GmailSender implements Notifier{
 
     private final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
     private final String TOKENS_DIRECTORY_PATH = "tokens";
@@ -33,7 +33,8 @@ public class GmailSender {
     private String from = "farmacialibertadtesting@gmail.com";
     private String userId = "me";
 
-    public Message newStockEmailNotification(Set<String> tos, String product) throws GeneralSecurityException, IOException, MessagingException {
+    @Override
+    public void stockNotification(Set<String> tos, String product) throws GeneralSecurityException, IOException, MessagingException {
         // Build a new authorized API client service.
         JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
         final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
@@ -46,7 +47,7 @@ public class GmailSender {
                 this.from, "New " + product + " stock arrived - Farmacia Libertad",
                 "New " + product + " stock is available, go check our store");
 
-        return this.sendMessage(service, this.userId, mimeMessage);
+        this.sendMessage(service, this.userId, mimeMessage);
     }
 
     protected Credential getCredentials(final NetHttpTransport HTTP_TRANSPORT) throws IOException {
