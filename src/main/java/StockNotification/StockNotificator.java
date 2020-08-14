@@ -2,7 +2,8 @@ package StockNotification;
 
 import Product.Exceptions.CannotNotifyStock;
 import Product.Product;
-import Utilities.Notification.GmailSender;
+import StockNotification.Notification.GmailSender;
+import StockNotification.Notification.Notifier;
 import Utilities.Persistence.GlobalEntityManagerFactory;
 
 import javax.persistence.EntityManager;
@@ -13,13 +14,17 @@ public class StockNotificator {
 
     private EntityManager em = GlobalEntityManagerFactory.getInstance().getEntityManagerFactory().createEntityManager();
     private RepoAwaitedProduct repoAwaitedProduct = new RepoAwaitedProduct(em);
-    private GmailSender gmailSender = new GmailSender();
+    private Notifier notifier;
+
+    public StockNotificator(Notifier notifier){
+        this.notifier = notifier;
+    }
 
     public void notifyCustomers(Product product){
         Optional<AwaitedProduct> awaitedProduct = repoAwaitedProduct.findAwaitedByProduct(product);
         if(awaitedProduct.isPresent()){
             try {
-                gmailSender.stockNotification(awaitedProduct.get().getClientsEmails(), product.getName());
+                notifier.stockNotification(awaitedProduct.get().getClientsEmails(), product.getName());
                 em.getTransaction().begin();
                 repoAwaitedProduct.removeAwaited(awaitedProduct.get());
                 em.getTransaction().commit();

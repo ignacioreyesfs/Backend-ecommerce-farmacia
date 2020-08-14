@@ -33,7 +33,7 @@ public class RecommendationTest {
         products.add(off);
 
         Optional<Product> productOptional = products.stream()
-                .filter(prod -> prod.getWeather().recommendedTemperature(weatherMock.getTemperatureNow()))
+                .filter(prod -> prod.getWeather().recommendedForTemperature(weatherMock.getTemperatureNow()))
                 .findFirst();
 
         assertEquals(panuelito, productOptional.get());

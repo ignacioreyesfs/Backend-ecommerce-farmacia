@@ -1,7 +1,5 @@
 package Order;
 
-import Order.Exceptions.NotPaymentSettedException;
-import Order.Payment.Payment;
 import Product.Product;
 
 import java.util.HashSet;
