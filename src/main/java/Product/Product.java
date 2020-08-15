@@ -35,11 +35,11 @@ public class Product {
         this.recommendedWeather = recommendedWeather;
     }
 
-    public double calculatePrice() {
+    public double getPrice() {
         return price * condition.discountRate();
     }
 
-    public double priceWithoutDiscount(){
+    public double getPriceWithoutDiscount(){
         return price;
     }
 
@@ -73,5 +73,37 @@ public class Product {
 
     public Integer getId(){
         return this.id;
+    }
+
+    private void setId(Integer id) {
+        this.id = id;
+    }
+
+    private void setName(String name) {
+        this.name = name;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    private void setManufacturer(Manufacturer manufacturer) {
+        this.manufacturer = manufacturer;
+    }
+
+    private void setRecommendedWeather(RecommendedWeather recommendedWeather) {
+        this.recommendedWeather = recommendedWeather;
+    }
+
+    private void setStock(int stock) {
+        this.stock = stock;
+    }
+
+    private void setDose(double dose) {
+        this.dose = dose;
+    }
+
+    private void setUnit(Unit unit) {
+        this.unit = unit;
     }
 }

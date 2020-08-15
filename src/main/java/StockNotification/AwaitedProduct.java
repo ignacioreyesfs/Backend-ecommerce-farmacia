@@ -41,11 +41,19 @@ public class AwaitedProduct {
         return product;
     }
 
-    public void setProduct(Product product) {
+    private void setProduct(Product product) {
         this.product = product;
     }
 
     public Integer getId(){
         return id;
+    }
+
+    private void setId(Integer id) {
+        this.id = id;
+    }
+
+    private void setClientsEmails(Set<String> clientsEmails) {
+        this.clientsEmails = clientsEmails;
     }
 }
