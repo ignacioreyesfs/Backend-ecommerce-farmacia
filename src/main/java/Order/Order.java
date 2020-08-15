@@ -2,16 +2,22 @@ package Order;
 
 import Product.Product;
 
+import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
+@Entity(name="Order_table")
 public class Order {
 
+    @Id
+    @GeneratedValue
+    Integer id;
     String street;
     int streetHeight;
-    double orderPrice;
     String generalRemarks;
+    @OneToMany(fetch= FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn(name = "order_id")
     Set<ItemProduct> itemProducts = new HashSet<ItemProduct>();
 
     public Order(String street, int streetHeight, String generalRemarks){
@@ -20,8 +26,10 @@ public class Order {
         this.generalRemarks = generalRemarks;
     }
 
+    public Order(){};
+
     public void addItemProduct(ItemProduct itemProduct){
-        Optional<ItemProduct> optionalSearchedItem = searchProduct(itemProduct.getProduct());
+        Optional<ItemProduct> optionalSearchedItem = this.searchProduct(itemProduct.getProduct());
 
         if(optionalSearchedItem.isPresent()){
             optionalSearchedItem.get().incrementUnits(itemProduct.getUnits());
@@ -30,13 +38,21 @@ public class Order {
         }
     }
 
+    public void discardItemProduct(ItemProduct itemProduct){
+        Optional<ItemProduct> optionalSearchedItem = this.searchProduct(itemProduct.getProduct());
+
+        if(optionalSearchedItem.isPresent()){
+            itemProducts.remove(optionalSearchedItem.get());
+        }
+    }
+
     private Optional<ItemProduct> searchProduct(Product product){
-        return itemProducts.stream().filter(prod -> prod.getProduct() == product)
+        return itemProducts.stream().filter(itemProduct -> itemProduct.getProduct() == product)
                 .findFirst();
     }
 
-    public double price(){
-        return itemProducts.stream().map(product -> product.getProduct().calculatePrice()).reduce(0.0, Double::sum);
+    public double orderPrice(){
+        return itemProducts.stream().map(itemProduct -> itemProduct.getPrice()).reduce(0.0, Double::sum);
     }
 
     public String getStreet() {
@@ -47,15 +63,27 @@ public class Order {
         return streetHeight;
     }
 
-    public double getOrderPrice() {
-        return orderPrice;
-    }
-
     public String getGeneralRemarks() {
         return generalRemarks;
     }
 
     public Set<ItemProduct> getItemProducts() {
         return itemProducts;
+    }
+
+    private void setStreet(String street) {
+        this.street = street;
+    }
+
+    private void setStreetHeight(int streetHeight) {
+        this.streetHeight = streetHeight;
+    }
+
+    private void setGeneralRemarks(String generalRemarks) {
+        this.generalRemarks = generalRemarks;
+    }
+
+    private void setItemProducts(Set<ItemProduct> itemProducts) {
+        this.itemProducts = itemProducts;
     }
 }

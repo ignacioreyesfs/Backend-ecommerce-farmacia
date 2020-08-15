@@ -10,6 +10,8 @@
 
         <class>Product.Product</class>
         <class>StockNotification.AwaitedProduct</class>
+        <class>Order.ItemProduct</class>
+        <class>Order.Order</class>
 
         <properties>
 

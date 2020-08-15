@@ -10,6 +10,6 @@ public class ProductTest {
     public void priceCalculation(){
         Product ibuprofeno = new Product("Ibuprofeno", Unit.MG, 400, 120, Manufacturer.BAGO, RecommendedWeather.NORMAL);
         ibuprofeno.setCondition(Condition.TWENTYPERCENT);
-        assertEquals(96, ibuprofeno.calculatePrice(), 0);
+        assertEquals(96, ibuprofeno.getPrice(), 0);
     }
 }
