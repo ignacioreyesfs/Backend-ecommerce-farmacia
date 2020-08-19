@@ -1,5 +1,6 @@
 package StockNotification.Notification;
 
+import Customer.Customer;
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
 import com.google.api.client.extensions.jetty.auth.oauth2.LocalServerReceiver;
@@ -14,6 +15,7 @@ import com.google.api.client.util.store.FileDataStoreFactory;
 import com.google.api.services.gmail.Gmail;
 import com.google.api.services.gmail.GmailScopes;
 import com.google.api.services.gmail.model.Message;
+import javax.mail.Message.RecipientType;
 
 import javax.mail.MessagingException;
 import javax.mail.Session;
@@ -34,7 +36,7 @@ public class GmailSender implements Notifier {
     private String userId = "me";
 
     @Override
-    public void stockNotification(Set<String> recipients, String product) throws GeneralSecurityException, IOException, MessagingException {
+    public void stockNotification(Customer customer, String product) throws GeneralSecurityException, IOException, MessagingException {
         // Build a new authorized API client service.
         JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
         final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
@@ -43,7 +45,7 @@ public class GmailSender implements Notifier {
                 .build();
 
         // Create a message
-        MimeMessage mimeMessage = this.createEmail(recipients,
+        MimeMessage mimeMessage = this.createEmail(customer.getEmail(),
                 this.from, "New " + product + " stock arrived - Farmacia Libertad",
                 "New " + product + " stock is available, go check our store");
 
@@ -70,7 +72,7 @@ public class GmailSender implements Notifier {
         return new AuthorizationCodeInstalledApp(flow, receiver).authorize("user");
     }
 
-    protected MimeMessage createEmail(Set<String> tos,
+    protected MimeMessage createEmail(String recipient,
                                           String from,
                                           String subject,
                                           String bodyText)
@@ -82,30 +84,12 @@ public class GmailSender implements Notifier {
         MimeMessage email = new MimeMessage(session);
         email.setFrom(new InternetAddress(from));
 
-        Iterator<String> toIterator = tos.iterator();
-
-
-        email.addRecipients(javax.mail.Message.RecipientType.TO,
-                InternetAddress.parseHeader(this.setToString(tos), false));
+        email.addRecipient(RecipientType.TO,
+                new InternetAddress(recipient));
         email.setSubject(subject);
         email.setText(bodyText);
 
         return email;
-    }
-
-    private String setToString(Set<String> setStrings){
-        StringBuffer emails = new StringBuffer();
-
-        Iterator<String> toIterator = setStrings.iterator();
-        while(toIterator.hasNext()){
-            String to = toIterator.next();
-            if(toIterator.hasNext())
-                emails.append(to + ",");
-            else
-                emails.append(to);
-        }
-
-        return emails.toString();
     }
 
     protected Message sendMessage(Gmail service,

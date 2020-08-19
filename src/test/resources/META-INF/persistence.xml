@@ -12,6 +12,7 @@
         <class>StockNotification.AwaitedProduct</class>
         <class>Order.ItemProduct</class>
         <class>Order.Order</class>
+        <class>Customer.Customer</class>
 
         <properties>
 
@@ -19,7 +20,7 @@
 
             <!-- database in-memory connection -->
             <property name="javax.persistence.jdbc.driver" value="org.h2.Driver" />
-            <property name="javax.persistence.jdbc.url" value="jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DATABASE_TO_UPPER=false" />
+            <property name="javax.persistence.jdbc.url" value="jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1" />
             <property name="javax.persistence.jdbc.user" value="sa" />
             <property name="javax.persistence.jdbc.password" value="" />
 
