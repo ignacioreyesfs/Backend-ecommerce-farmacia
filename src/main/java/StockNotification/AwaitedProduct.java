@@ -11,12 +11,12 @@ public class AwaitedProduct {
     @GeneratedValue
     private Integer id;
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinColumn(name="product_id")
+    @JoinColumn(name="PRODUCT_ID")
     private Product product;
     @ElementCollection
-    @CollectionTable(name="AwaitedProduct_Emails",
-            joinColumns = {@JoinColumn(name="awaitedProduct_id", referencedColumnName = "id")})
-    @Column(name="email")
+    @CollectionTable(name="AWAITED_PRODUCT_EMAIL",
+            joinColumns = {@JoinColumn(name="AWAITED_PRODUCT_ID", referencedColumnName = "id")})
+    @Column(name="EMAIL")
     private Set<String> clientsEmails = new HashSet<>();
 
     public AwaitedProduct(){}

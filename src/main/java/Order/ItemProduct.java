@@ -13,7 +13,7 @@ public class ItemProduct {
     @GeneratedValue
     Integer id;
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-    @JoinColumn(name = "product_id")
+    @JoinColumn(name = "PRODUCT_ID")
     private Product product;
     private int units;
     private String remarks;

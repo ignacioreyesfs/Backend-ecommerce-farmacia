@@ -7,7 +7,7 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
-@Entity(name="Order_table")
+@Entity(name="ORDER_TABLE")
 public class Order {
 
     @Id
@@ -17,7 +17,7 @@ public class Order {
     int streetHeight;
     String generalRemarks;
     @OneToMany(fetch= FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinColumn(name = "order_id")
+    @JoinColumn(name = "ORDER_ID")
     Set<ItemProduct> itemProducts = new HashSet<ItemProduct>();
 
     public Order(String street, int streetHeight, String generalRemarks){

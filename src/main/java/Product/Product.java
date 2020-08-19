@@ -9,13 +9,13 @@ public class Product {
     @Id
     @GeneratedValue
     private Integer id;
-    @Column(name="product_name")
+    @Column(name="PRODUCT_NAME")
     private String name;
     private double price;
     @Enumerated(EnumType.STRING)
     private Manufacturer manufacturer;
     @Enumerated(EnumType.STRING)
-    @Column(name="product_condition")
+    @Column(name="PRODUCT_CONDITION")
     private Condition condition = Condition.NORMAL;
     @Enumerated(EnumType.STRING)
     private RecommendedWeather recommendedWeather;
