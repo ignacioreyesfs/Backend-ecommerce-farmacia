@@ -1,6 +1,5 @@
 package Utilities.CronExpression;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public final class CronExpression {

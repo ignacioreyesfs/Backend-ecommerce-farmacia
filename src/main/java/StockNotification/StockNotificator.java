@@ -2,7 +2,6 @@ package StockNotification;
 
 import Product.Exceptions.CannotNotifyStock;
 import Product.Product;
-import StockNotification.Notification.GmailSender;
 import StockNotification.Notification.Notifier;
 import Utilities.Persistence.GlobalEntityManagerFactory;
 
