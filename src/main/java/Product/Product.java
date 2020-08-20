@@ -28,8 +28,8 @@ public class Product {
     @Enumerated(EnumType.STRING)
     private Unit unit;
     @ManyToMany(fetch=FetchType.LAZY, cascade={CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinTable(name="AWAITED_PRODUCT_CLIENT", joinColumns = @JoinColumn(name="AWAITED_PRODUCT_ID"),
-            inverseJoinColumns = @JoinColumn(name="CLIENT_ID"))
+    @JoinTable(name="PRODUCT_STOCK_CLIENT", joinColumns = @JoinColumn(name="PRODUCT_ID"),
+            inverseJoinColumns = @JoinColumn(name="CUSTOMER_ID"))
     private Set<Customer> customersWaitingStock = new HashSet<>();
 
     public Product(){}
