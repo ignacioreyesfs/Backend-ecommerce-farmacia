@@ -19,9 +19,9 @@ public class OrderTest {
     public void initialize(){
         ibuprofeno = new Product("Ibuprofeno", Unit.MG, 400, 120, Manufacturer.BAGO, RecommendedWeather.NORMAL);
         ibuprofeno.increaseStock(100);
-        ibuprofenoItem1 = new ItemProduct(ibuprofeno, 3, "");
-        ibuprofenoItem2 = new ItemProduct(ibuprofeno, 4, "");
-        order = new Order("Ayacucho", 341, "Ring the bell and wait");
+        ibuprofenoItem1 = new ItemProduct(ibuprofeno, 3);
+        ibuprofenoItem2 = new ItemProduct(ibuprofeno, 4);
+        order = new Order("Ayacucho", 341);
     }
 
     @Test

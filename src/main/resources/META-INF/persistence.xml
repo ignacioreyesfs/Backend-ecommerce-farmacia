@@ -9,7 +9,6 @@
         <provider>org.hibernate.ejb.HibernatePersistence</provider>
 
         <class>Product.Product</class>
-        <class>StockNotification.AwaitedProduct</class>
         <class>Order.ItemProduct</class>
         <class>Order.Order</class>
         <class>Customer.Customer</class>

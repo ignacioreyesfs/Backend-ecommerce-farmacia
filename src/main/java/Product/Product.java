@@ -1,8 +1,12 @@
 package Product;
 
+import Customer.Customer;
 import Recommendation.RecommendedWeather;
+import StockNotification.Exceptions.ClientNotNotifiedException;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Product {
@@ -23,6 +27,10 @@ public class Product {
     private double dose;
     @Enumerated(EnumType.STRING)
     private Unit unit;
+    @ManyToMany(fetch=FetchType.LAZY, cascade={CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(name="AWAITED_PRODUCT_CLIENT", joinColumns = @JoinColumn(name="AWAITED_PRODUCT_ID"),
+            inverseJoinColumns = @JoinColumn(name="CLIENT_ID"))
+    private Set<Customer> customersWaitingStock = new HashSet<>();
 
     public Product(){}
 
@@ -49,6 +57,19 @@ public class Product {
 
     public void decreaseStock(int amount){
         stock -= amount;
+    }
+
+    public void notifyCustomersStock(){
+        customersWaitingStock.forEach(customer -> this.notifyCustomerStock(customer));
+    }
+
+    private void notifyCustomerStock(Customer customer){
+        try{
+            customer.notifyNewProductStock(name);
+            customersWaitingStock.remove(customer);
+        }catch (ClientNotNotifiedException e){
+            // TODO: if notifier is offline (check exception), retry later (schedule a job).
+        }
     }
 
     public int getStock() {
@@ -105,5 +126,9 @@ public class Product {
 
     private void setUnit(Unit unit) {
         this.unit = unit;
+    }
+
+    private void setCustomersWaitingStock(Set<Customer> customersWaitingStock) {
+        this.customersWaitingStock = customersWaitingStock;
     }
 }

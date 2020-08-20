@@ -20,10 +20,9 @@ public class ItemProduct {
     // persisted for historical price of the order
     private double price;
 
-    public ItemProduct(Product product, int units, String remarks){
+    public ItemProduct(Product product, int units){
         this.product = product;
         this.units = units;
-        this.remarks = remarks;
         this.price = product.getPrice() * units;
     }
 
@@ -61,16 +60,16 @@ public class ItemProduct {
         return remarks;
     }
 
+    public void setRemarks(String remarks) {
+        this.remarks = remarks;
+    }
+
     private void setProduct(Product product) {
         this.product = product;
     }
 
     private void setUnits(int units) {
         this.units = units;
-    }
-
-    private void setRemarks(String remarks) {
-        this.remarks = remarks;
     }
 
     private void setPrice(double price) {

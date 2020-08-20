@@ -20,10 +20,9 @@ public class Order {
     @JoinColumn(name = "ORDER_ID")
     Set<ItemProduct> itemProducts = new HashSet<ItemProduct>();
 
-    public Order(String street, int streetHeight, String generalRemarks){
+    public Order(String street, int streetHeight){
         this.street = street;
         this.streetHeight = streetHeight;
-        this.generalRemarks = generalRemarks;
     }
 
     public Order(){};
@@ -67,6 +66,14 @@ public class Order {
         return generalRemarks;
     }
 
+    public Integer getId(){
+        return id;
+    }
+
+    public void setGeneralRemarks(String generalRemarks) {
+        this.generalRemarks = generalRemarks;
+    }
+
     public Set<ItemProduct> getItemProducts() {
         return itemProducts;
     }
@@ -77,10 +84,6 @@ public class Order {
 
     private void setStreetHeight(int streetHeight) {
         this.streetHeight = streetHeight;
-    }
-
-    private void setGeneralRemarks(String generalRemarks) {
-        this.generalRemarks = generalRemarks;
     }
 
     private void setItemProducts(Set<ItemProduct> itemProducts) {
