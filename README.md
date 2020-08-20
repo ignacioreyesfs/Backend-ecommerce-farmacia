@@ -1,5 +1,5 @@
 # Farmacia
-Backend de aplicacion web para ventas de una farmacia desarrollado en java, utilizando Hibernate ORM y Quartz JobScheduler.
+Backend de aplicacion web para ventas de una farmacia desarrollado en java, utilizando Quartz JobScheduler y Hibernate ORM (conectado a MySQL DB).
 
 ## Funcionalidades
 * **Poner un producto en oferta:** producto con descuento, inicio y finalización de la promoción de forma asincrónica (scheduling jobs).
