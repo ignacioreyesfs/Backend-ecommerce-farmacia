@@ -10,6 +10,8 @@ import org.junit.Test;
 
 import javax.persistence.EntityManager;
 
+import java.util.ArrayList;
+
 import static org.junit.Assert.assertEquals;
 
 public class ORMTest {
