@@ -16,8 +16,7 @@ import java.util.stream.Stream;
 
 public class OpenWeatherAdapter implements WeatherProvider {
 
-    //TODO: hide api key (put it on a text file and read it)
-    private final String KEY_PATH = "src/main/resources/weather_keys.txt";
+    private final String KEY_PATH = "weather_keys.txt";
     private final String KEY_NAME = "OPEN_WEATHER";
     private final String URL_BUENOSAIRES = "http://api.openweathermap.org/data/2.5/weather?q=Buenos%20Aires,Argentina&appid=";
     private final String URL_TEMPERATURE_BSAS_NOW = URL_BUENOSAIRES + this.getKey();
@@ -49,7 +48,7 @@ public class OpenWeatherAdapter implements WeatherProvider {
         String delimiter = ":";
         Map<String, String> map = new HashMap<>();
         try{
-            Stream<String> lines = Files.lines(Paths.get(KEY_PATH));
+            Stream<String> lines = Files.lines(Paths.get(this.getClass().getResource(KEY_PATH).getPath()));
             lines.filter(line -> line.contains(delimiter))
                     .forEach(line -> map.putIfAbsent(line.split(delimiter)[0], line.split(delimiter)[1]));
         }catch(IOException e){
