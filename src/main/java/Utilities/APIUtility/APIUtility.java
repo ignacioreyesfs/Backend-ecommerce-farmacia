@@ -1,5 +1,6 @@
 package Utilities.APIUtility;
 
+import Recommendation.WeatherConnection.Exceptions.ConnectionToApiException;
 import Utilities.APIUtility.Exceptions.*;
 import okhttp3.*;
 import org.json.simple.JSONObject;
@@ -92,11 +93,28 @@ public class APIUtility {
     }
 
     // BOTH OPTIONS METHODS
+
+    public JSONObject getJSONObjectResponse(String urlGet){
+        Response response;
+        JSONObject jobjResponse = null;
+
+        // TODO: try again instead of throwing an exception
+        try {
+            response = this.sendGetRequest(urlGet, null);
+            jobjResponse = this.jsonStringToJsonObject(response.body().string());
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new ConnectionToApiException();
+        }
+
+        return jobjResponse;
+    }
+
     /**
      * @return a JsonObject with the content of the body
      * @throws IOException
      */
-    public JSONObject getJsonObjectResponse(String stringResponse) {
+    private JSONObject jsonStringToJsonObject(String stringResponse) {
 
         JSONParser parse = new JSONParser();
         JSONObject jsonObject;
