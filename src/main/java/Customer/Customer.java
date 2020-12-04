@@ -2,6 +2,7 @@ package Customer;
 
 import Order.Order;
 import StockNotification.Exceptions.ClientNotNotifiedException;
+import StockNotification.Notification.Notifier;
 import StockNotification.Notification.NotifierType;
 
 import javax.persistence.*;
@@ -29,14 +30,6 @@ public class Customer {
 
     public Customer(){}
 
-    public void notifyNewProductStock(String productName){
-        try{
-            notifierType.getNotifier().stockNotification(this, productName);
-        }catch (Exception e){
-            throw new ClientNotNotifiedException();
-        }
-    }
-
     public void addOrder(Order order){
         orders.add(order);
     }
@@ -63,5 +56,9 @@ public class Customer {
 
     private void setNotifierType(NotifierType notifierType) {
         this.notifierType = notifierType;
+    }
+
+    public Notifier getNotifier(){
+        return notifierType.getNotifier();
     }
 }

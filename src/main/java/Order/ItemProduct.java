@@ -28,12 +28,16 @@ public class ItemProduct {
 
     public ItemProduct(){};
 
-    public void incrementUnits(int addedUnits){
-        if(product.getStock() < units + addedUnits)
+    public void incrementUnits(int unitsToAdd){
+        if(this.insufficientStock(unitsToAdd))
             throw new InsufficientStockException();
 
-        this.units += addedUnits;
+        units += unitsToAdd;
         price = product.getPrice() * units;
+    }
+
+    private boolean insufficientStock(int unitsToAdd){
+        return product.getStock() < units + unitsToAdd;
     }
 
     public void decrementUnit(){

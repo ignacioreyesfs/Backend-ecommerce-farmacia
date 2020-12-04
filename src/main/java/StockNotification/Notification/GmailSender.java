@@ -36,7 +36,7 @@ public class GmailSender implements Notifier {
     private String userId = "me";
 
     @Override
-    public void stockNotification(Customer customer, String product) throws GeneralSecurityException, IOException, MessagingException {
+    public void notifyNewProductStock(Customer customer, String product) throws GeneralSecurityException, IOException, MessagingException {
         // Build a new authorized API client service.
         JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
         final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();

@@ -3,6 +3,7 @@ package Product;
 import Customer.Customer;
 import Recommendation.RecommendedWeather;
 import StockNotification.Exceptions.ClientNotNotifiedException;
+import StockNotification.Notification.StockNotifier;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -59,13 +60,14 @@ public class Product {
         stock -= amount;
     }
 
-    public void notifyCustomersStock(){
-        customersWaitingStock.forEach(customer -> this.notifyCustomerStock(customer));
+    public void notifyNewStockToCustomers(){
+        customersWaitingStock.forEach(customer -> this.notifyNewStockToCustomer(customer));
     }
 
-    private void notifyCustomerStock(Customer customer){
+    private void notifyNewStockToCustomer(Customer customer){
+        StockNotifier stockNotifier = new StockNotifier();
         try{
-            customer.notifyNewProductStock(name);
+            stockNotifier.notifyNewStock(customer, name);
             customersWaitingStock.remove(customer);
         }catch (ClientNotNotifiedException e){
             // TODO: if notifier is offline (check exception), retry later (schedule a job).

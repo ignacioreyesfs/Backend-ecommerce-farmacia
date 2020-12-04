@@ -28,24 +28,16 @@ public class Order {
     public Order(){};
 
     public void addItemProduct(ItemProduct itemProduct){
-        Optional<ItemProduct> optionalSearchedItem = this.searchProduct(itemProduct.getProduct());
+        Optional<ItemProduct> itemWithSameProduct = this.searchItemByProduct(itemProduct.getProduct());
 
-        if(optionalSearchedItem.isPresent()){
-            optionalSearchedItem.get().incrementUnits(itemProduct.getUnits());
+        if(itemWithSameProduct.isPresent()){
+            itemWithSameProduct.get().incrementUnits(itemProduct.getUnits());
         }else{
             itemProducts.add(itemProduct);
         }
     }
 
-    public void discardItemProduct(ItemProduct itemProduct){
-        Optional<ItemProduct> optionalSearchedItem = this.searchProduct(itemProduct.getProduct());
-
-        if(optionalSearchedItem.isPresent()){
-            itemProducts.remove(optionalSearchedItem.get());
-        }
-    }
-
-    private Optional<ItemProduct> searchProduct(Product product){
+    private Optional<ItemProduct> searchItemByProduct(Product product){
         return itemProducts.stream().filter(itemProduct -> itemProduct.getProduct() == product)
                 .findFirst();
     }

@@ -1,5 +1,6 @@
 package Utilities.Persistence;
 
+import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
@@ -20,5 +21,9 @@ public final class GlobalEntityManagerFactory {
             emf = Persistence.createEntityManagerFactory("pharmacy");
         }
         return emf;
+    }
+
+    public static EntityManager createEntityManager(){
+        return getInstance().getEntityManagerFactory().createEntityManager();
     }
 }
