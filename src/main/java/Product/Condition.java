@@ -3,16 +3,16 @@ package Product;
 public enum Condition {
     NORMAL {
         @Override
-        public double discountRate() {
+        public double getDiscountRate() {
             return 1;
         }
     },
     TWENTYPERCENT {
         @Override
-        public double discountRate() {
+        public double getDiscountRate() {
             return 0.8;
         }
     };
 
-    public abstract double discountRate();
+    public abstract double getDiscountRate();
 }

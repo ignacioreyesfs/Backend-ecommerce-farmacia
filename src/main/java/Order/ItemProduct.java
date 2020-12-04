@@ -23,7 +23,7 @@ public class ItemProduct {
     public ItemProduct(Product product, int units){
         this.product = product;
         this.units = units;
-        this.price = product.getPrice() * units;
+        this.price = product.getFinalPrice() * units;
     }
 
     public ItemProduct(){};
@@ -33,7 +33,7 @@ public class ItemProduct {
             throw new InsufficientStockException();
 
         units += unitsToAdd;
-        price = product.getPrice() * units;
+        price = product.getFinalPrice() * units;
     }
 
     private boolean insufficientStock(int unitsToAdd){
@@ -45,7 +45,7 @@ public class ItemProduct {
             throw new ZeroUnitsException();
 
         units--;
-        price -= product.getPrice();
+        price -= product.getFinalPrice();
     }
 
     public double getPrice(){

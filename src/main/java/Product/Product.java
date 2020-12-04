@@ -44,8 +44,8 @@ public class Product {
         this.recommendedWeather = recommendedWeather;
     }
 
-    public double getPrice() {
-        return price * condition.discountRate();
+    public double getFinalPrice() {
+        return price * condition.getDiscountRate();
     }
 
     public double getPriceWithoutDiscount(){

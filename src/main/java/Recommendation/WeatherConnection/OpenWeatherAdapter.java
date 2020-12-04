@@ -39,12 +39,12 @@ public class OpenWeatherAdapter implements WeatherProvider {
     }
 
     public double getTemperatureNow(){
-        String stringTemperature = this.getValueOfTempField(URL_TEMPERATURE_BSAS_NOW);
+        String stringTemperature = this.getValueOfTempFieldFromAPI(URL_TEMPERATURE_BSAS_NOW);
 
         return this.kelvinToCelsius(Double.parseDouble(stringTemperature));
     }
 
-    private String getValueOfTempField(String urlGet){
+    private String getValueOfTempFieldFromAPI(String urlGet){
         APIUtility apiUtility = new APIUtility();
 
         JSONObject jobjResponse = apiUtility.getJSONObjectResponse(urlGet);

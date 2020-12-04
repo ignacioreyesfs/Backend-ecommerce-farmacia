@@ -1,7 +1,5 @@
 package Product;
 
-import Product.Offer.NotInDatabaseException;
-
 import javax.persistence.EntityManager;
 
 public class RepoProduct {
@@ -22,16 +20,6 @@ public class RepoProduct {
             product = em.merge(product);
         }
         return product;
-    }
-
-    public void finishOfferByProductId(int productId){
-        Product product = this.findProductById(productId);
-
-        if(product == null){
-            throw new NotInDatabaseException();
-        }
-
-        product.setCondition(Condition.NORMAL);
     }
 
 }
